@@ -10,8 +10,10 @@ class Node
 end
 
 class LinkedList
+  attr_reader :size
   def initialize
     @head = Node.new
+    @size = 0
   end
   def append(data)
     cur_node = head
@@ -19,12 +21,14 @@ class LinkedList
       cur_node = cur_node.next_node
     end
     cur_node.next_node = Node.new(data)
+    @size += 1
   end
   def prepend(data)
     former_first_node = head.next_node
     head.next_node = Node.new(data)
     cur_first_node = head.next_node
     cur_first_node.next_node = former_first_node
+    @size += 1
   end
   def to_s
     cur_node = head
@@ -34,8 +38,7 @@ class LinkedList
     end
       puts("nil")
   end
-  private
-  attr_reader :head
+  attr_accessor :head
 end
 
 list = LinkedList.new
@@ -43,3 +46,4 @@ list.append("First node")
 list.append("Second node")
 list.prepend("Zeroth node")
 list.to_s
+pp list.size
