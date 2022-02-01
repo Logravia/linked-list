@@ -49,6 +49,21 @@ class LinkedList
     end
       puts("nil")
   end
+  def at(index)
+    if (index < 0 or
+        not index.kind_of? Integer or
+        index > size)
+      return nil
+    end
+
+    cur_node = head.next_node
+    cur_index = 0
+    while cur_index < index and not cur_node.next_node.nil?
+      cur_node = cur_node.next_node
+      cur_index =+ 1
+    end
+    cur_node
+  end
   attr_accessor :head
 end
 
@@ -57,6 +72,6 @@ list.append("First node")
 list.append("Second node")
 list.prepend("Zeroth node")
 list.to_s
-pp list.head
-pp list.tail
-pp list.size
+#pp list.head
+#pp list.tail
+#pp list.size
