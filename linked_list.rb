@@ -82,6 +82,15 @@ class LinkedList
     end
     false
   end
+  def find(to_find)
+    cur_index = 0
+    self.each do |data, _n|
+      return cur_index if data == to_find
+      cur_index += 1
+    end
+    nil
+  end
+  private
   attr_accessor :head
   def each
     return if head.last?
@@ -103,7 +112,6 @@ list.append("Second node")
 list.prepend("Zeroth node")
 pp list
 puts list.to_s
-puts list.contains("Zeroth node")
 #pp list.head
 #pp list.tail
 #pp list.size
