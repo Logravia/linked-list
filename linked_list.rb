@@ -45,12 +45,9 @@ class LinkedList
     cur_node
   end
   def to_s
-    cur_node = head
-    until cur_node.nil?
-      print("(#{cur_node.data}) -> ")
-      cur_node = cur_node.next_node
-    end
-      puts("nil")
+    string = ''
+    self.each { |data,_n| string += "(#{data})-> "}
+    string + 'nil'
   end
   def at(index)
     if (index < 0 or
@@ -85,19 +82,22 @@ class LinkedList
     return if head.last?
 
     cur_node = head.next_node
-    yield(cur_node.data)
+    yield(cur_node.data, cur_node.next_node)
 
     while not cur_node.last?
       cur_node = cur_node.next_node
-      yield(cur_node.data)
+      yield(cur_node.data, cur_node.next_node)
     end
 
   end
 end
 
 list = LinkedList.new
-list.to_s
-list.each { |data| puts data }
+list.append("First node")
+list.append("Second node")
+list.prepend("Zeroth node")
+pp list
+puts list.to_s
 #pp list.head
 #pp list.tail
 #pp list.size
