@@ -77,14 +77,27 @@ class LinkedList
     end
     prev_node.next_node = nil
   end
+  def contains(value)
+
+  end
   attr_accessor :head
+  def each
+    return if head.last?
+
+    cur_node = head.next_node
+    yield(cur_node.data)
+
+    while not cur_node.last?
+      cur_node = cur_node.next_node
+      yield(cur_node.data)
+    end
+
+  end
 end
 
 list = LinkedList.new
-list.append("First node")
-list.append("Second node")
-list.prepend("Zeroth node")
 list.to_s
+list.each { |data| puts data }
 #pp list.head
 #pp list.tail
 #pp list.size
