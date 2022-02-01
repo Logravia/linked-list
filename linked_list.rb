@@ -75,7 +75,12 @@ class LinkedList
     prev_node.next_node = nil
   end
   def contains(value)
-
+    self.each do |data, _n|
+      if data == value
+        return true
+      end
+    end
+    false
   end
   attr_accessor :head
   def each
@@ -98,6 +103,7 @@ list.append("Second node")
 list.prepend("Zeroth node")
 pp list
 puts list.to_s
+puts list.contains("Zeroth node")
 #pp list.head
 #pp list.tail
 #pp list.size
