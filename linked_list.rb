@@ -7,6 +7,9 @@ class Node
     @data = data
     @next_node = nil
   end
+  def last?
+    return @next_node.nil?
+  end
 end
 
 class LinkedList
@@ -17,7 +20,7 @@ class LinkedList
   end
   def append(data)
     cur_node = head
-    until cur_node.next_node.nil?
+    until cur_node.last?
       cur_node = cur_node.next_node
     end
     cur_node.next_node = Node.new(data)
@@ -63,6 +66,16 @@ class LinkedList
       cur_index =+ 1
     end
     cur_node
+  end
+  def pop
+    return nil if head.last?
+    cur_node = head.next_node
+    prev_node = head
+    while not cur_node.last?
+      prev_node = cur_node
+      cur_node = cur_node.next_node
+    end
+    prev_node.next_node = nil
   end
   attr_accessor :head
 end
