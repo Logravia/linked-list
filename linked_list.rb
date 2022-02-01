@@ -30,6 +30,17 @@ class LinkedList
     cur_first_node.next_node = former_first_node
     @size += 1
   end
+  def head
+    head.next_node
+  end
+  def tail
+    return nil if head.next_node.nil?
+    cur_node = head
+    until cur_node.next_node.nil?
+      cur_node = cur_node.next_node
+    end
+    cur_node
+  end
   def to_s
     cur_node = head
     until cur_node.nil?
@@ -46,4 +57,6 @@ list.append("First node")
 list.append("Second node")
 list.prepend("Zeroth node")
 list.to_s
+pp list.head
+pp list.tail
 pp list.size
