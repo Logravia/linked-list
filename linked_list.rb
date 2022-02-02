@@ -72,6 +72,7 @@ class LinkedList
       prev_node = cur_node
       cur_node = cur_node.next_node
     end
+    @size -=1
     prev_node.next_node = nil
   end
   def contains(value)
@@ -83,10 +84,8 @@ class LinkedList
     false
   end
   def find(to_find)
-    cur_index = 0
-    self.each do |data, _n|
-      return cur_index if data == to_find
-      cur_index += 1
+    self.each_with_index do |data, index|
+      return index if data == to_find
     end
     nil
   end
@@ -115,31 +114,30 @@ class LinkedList
     return self
   end
   def insert_at(index, value)
-    return self if index > size or not index.kind_of? Integer
-    prev_node = head
-    cur_node = head.next_node
-    cur_index = 0
-    while index != cur_index
-      prev_node = cur_node
-      cur_node = cur_node.next_node
-      cur_index += 1
+    traverse_list do |prev_node, cur_node, cur_index|
+      if index == cur_index
+        new_node = Node.new(value)
+        prev_node.next_node = new_node
+        new_node.next_node = cur_node
+        @size += 1
+      end
     end
-    new_node = Node.new(value)
-    prev_node.next_node = new_node
-    new_node.next_node = cur_node
-    return self
+    self
   end
   def delete_at(index)
     traverse_list do |prev_node, cur_node, cur_index|
       if index == cur_index
         prev_node.next_node = cur_node.next_node
+        @size -= 1
       end
    end
+    self
   end
   private
   attr_accessor :head
   def traverse_list
-    return self if not block_given? or head.last?
+    return self if not block_given?
+
     prev_node = head
     cur_node = head.next_node
     cur_index = 0
@@ -151,6 +149,7 @@ class LinkedList
       cur_index += 1
       yield(prev_node, cur_node, cur_index)
     end
+    self
   end
 end
 
@@ -159,7 +158,6 @@ list.append("First node")
 list.append("Second node")
 list.prepend("Zeroth node")
 list.insert_at(1, "INSERT")
-list.delete_at(0)
 
 puts list.to_s
 #pp list.head
